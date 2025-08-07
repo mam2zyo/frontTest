@@ -5,6 +5,8 @@ import TodoList from "./routes/TodoList";
 import TodoNew from "./routes/TodoNew";
 import TodoEdit from "./routes/TodoEdit";
 
+import "./App.css";
+
 function App() {
   const [todos, setTodos] = useState([
     {
@@ -39,6 +41,8 @@ function App() {
     );
   };
 
+  const [showCompleted, setShowCompleted] = useState(true);
+
   const navigate = useNavigate();
 
   const handleAdd = (newTodo) => {
@@ -59,24 +63,28 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate replace to="/todos" />} />
-      <Route
-        path="/todos"
-        element={
-          <TodoList
-            todos={todos}
-            onDelete={handleDelete}
-            onToggle={handleToggle}
-          />
-        }
-      />
-      <Route path="/todos/new" element={<TodoNew onAdd={handleAdd} />} />
-      <Route
-        path="/todos/:id/edit"
-        element={<TodoEdit todos={todos} onUpdate={handleUpdate} />}
-      />
-    </Routes>
+    <div className="app-container">
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/todos" />} />
+        <Route
+          path="/todos"
+          element={
+            <TodoList
+              todos={todos}
+              onDelete={handleDelete}
+              onToggle={handleToggle}
+              showCompleted={showCompleted}
+              onToggleShowCompleted={() => setShowCompleted(!showCompleted)}
+            />
+          }
+        />
+        <Route path="/todos/new" element={<TodoNew onAdd={handleAdd} />} />
+        <Route
+          path="/todos/:id/edit"
+          element={<TodoEdit todos={todos} onUpdate={handleUpdate} />}
+        />
+      </Routes>
+    </div>
   );
 }
 

@@ -1,20 +1,26 @@
 import { Link } from "react-router-dom";
+import "./TodoItem.css";
 
 function TodoItem({ todo, onDelete, onToggle }) {
-  const itemStyle = {
-    textDecoration: todo.completed ? "line-through" : "none",
-    color: todo.completed ? "gray" : "black",
-  };
+  const itemClassName = `todo-item ${todo.completed ? "completd" : ""}`;
 
   return (
-    <li style={itemStyle}>
-      <h3>{todo.title}</h3>
-      <p>{todo.content}</p>
-      <button onClick={() => onToggle(todo.id)}>완료/미완료</button>
-      <button onClick={() => onDelete(todo.id)}>삭제</button>
-      <Link to={`/todos/${todo.id}/edit`}>
-        <button>수정</button>
-      </Link>
+    <li className={itemClassName}>
+      <div className="content-area">
+        <h3>{todo.title}</h3>
+        <p>{todo.content}</p>
+      </div>
+      <div className="button-group">
+        <button className="btn-toggle" onClick={() => onToggle(todo.id)}>
+          {todo.completed ? "✔️" : "◻️"}
+        </button>
+        <Link to={`/todos/${todo.id}/edit`}>
+          <button className="btn-edit">✏️</button>
+        </Link>
+        <button className="btn-delete" onClick={() => onDelete(todo.id)}>
+          🗑️
+        </button>
+      </div>
     </li>
   );
 }
